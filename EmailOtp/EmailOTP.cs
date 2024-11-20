@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using System.Text.RegularExpressions;
 
+namespace EmailOTPModule{
 
 public class EmailOTP
 {
@@ -25,12 +26,12 @@ public class EmailOTP
         return random.Next(0, 999999).ToString("D6"); // Generate a 6-digit OTP
     }
 
-    public int GenerateOtpEmail(string userEmail)
+    public (int,string) GenerateOtpEmail(string userEmail)
     {
         if (!Regex.IsMatch(userEmail, @"^[a-zA-Z0-9._%+-]+@([a-zA-Z0-9-]+\.)*dso\.org\.sg$"))
         {
              Console.WriteLine("Email validation failed. Only emails from '.dso.org.sg' are allowed.");
-            return StatusConstants.StatusEmailInvalid;
+            return (StatusConstants.StatusEmailInvalid,String.Empty);
         }
         string otp = GenerateOtp();
         Console.WriteLine("OTP:",otp);
@@ -42,12 +43,12 @@ public class EmailOTP
         {
             string emailBody = $"Your OTP Code is {otp}. The code is valid for 1 minute.";
             SendEmail(userEmail, emailBody);
-            return StatusConstants.StatusEmailOk;
+            return (StatusConstants.StatusEmailOk,otp);
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error sending email: {ex.Message}");
-            return StatusConstants.StatusEmailFail;
+            return (StatusConstants.StatusEmailFail,string.Empty);
         }
     }
 
@@ -71,7 +72,7 @@ public class EmailOTP
     int maxAttempts = 10;
     int attempts = 0;
 
-    // Timeout after 1 minute
+
     CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
 
     try
@@ -117,3 +118,5 @@ public class EmailOTP
         Console.WriteLine($"Sending email to {emailAddress}:\n{emailBody}");
     }
 }
+}
+

@@ -1,4 +1,6 @@
 ﻿
+namespace EmailOTPModule{
+
 
 class Program
 {
@@ -8,7 +10,8 @@ class Program
         emailOtpModule.Start();
 
         string userEmail = "user@dso.org.sg";
-        int status = emailOtpModule.GenerateOtpEmail(userEmail);
+        var res=emailOtpModule.GenerateOtpEmail(userEmail);
+        int status = res.Item1;
 
         if (status == StatusConstants.StatusEmailOk)
         {
@@ -37,4 +40,5 @@ class Program
 
         emailOtpModule.Close();
     }
+}
 }

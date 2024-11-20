@@ -1,5 +1,6 @@
 
-public class MockInputStream : IInputStream
+namespace EmailOTPModule{
+    public class MockInputStream : IInputStream
 {
     public string ReadOtp(CancellationToken cancellationToken)
     {
@@ -25,4 +26,5 @@ public class MockInputStream : IInputStream
             throw;
         }
     }
+}
 }

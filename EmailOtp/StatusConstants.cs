@@ -1,3 +1,4 @@
+namespace EmailOTPModule{
 public static class StatusConstants
 {
     public const int StatusEmailOk = 1;
@@ -6,4 +7,5 @@ public static class StatusConstants
     public const int StatusOtpOk = 4;
     public const int StatusOtpFail = 5;
     public const int StatusOtpTimeout = 6;
+}
 }
